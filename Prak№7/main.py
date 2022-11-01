@@ -36,16 +36,16 @@ def hide(DATA=DATA_bitcoin, projection=projection):
     return DATA
 
 
-def normalize(DATA):
-    numerics = ["int64", "float64"]
-    newDATA = DATA.select_dtypes(include=numerics)
-    scaler = preprocessing.MinMaxScaler()
-    scaler.fit(newDATA)
-    scaled_features = scaler.transform(newDATA)
-    df_MinMax = pd.DataFrame(data=scaled_features,
-                             columns=newDATA.columns)
+# def normalize(DATA):
+#     numerics = ["int64", "float64"]
+#     newDATA = DATA.select_dtypes(include=numerics)
+#     scaler = preprocessing.MinMaxScaler()
+#     scaler.fit(newDATA)
+#     scaled_features = scaler.transform(newDATA)
+#     df_MinMax = pd.DataFrame(data=scaled_features,
+#                              columns=newDATA.columns)
 
-    return df_MinMax
+    # return df_MinMax
 
 
 def slicing(DATA, x_column, y_column, projection=projection):
@@ -55,22 +55,23 @@ def slicing(DATA, x_column, y_column, projection=projection):
     y = np.array(y, type(float))
     x = x[:-projection]
     y = y[:-projection]
+    print("x: \n", x, "\ny: \n", y)
     return [x, y]
 
 
-def line_regres(x, y, df=(normalize(hide()))):
+def line_regres(x, y, df=hide()):
     regression = LinearRegression()
     regression.fit(x, y)
     print(f"Наклон линии регерессии: {regression.coef_}")
     print(f"Y-перехват: {regression.intercept_}")
-    plt.figure(figsize=(10, 6))
-    plt.scatter(x, y, alpha=0.3, color='purple')
-    plt.plot(x, regression.predict(x), color='yellow', linewidth=3)
-    plt.xlabel('predict')
-    plt.ylabel('close')
-    plt.ylim(0, 1)
-    plt.xlim(0, 1)
-    plt.show()
+    # plt.figure(figsize=(10, 6))
+    # plt.scatter(x, y, alpha=0.3, color='purple')
+    # plt.plot(x, regression.predict(x), color='yellow', linewidth=3)
+    # plt.xlabel('predict')
+    # plt.ylabel('close')
+    # plt.ylim(0, 1)
+    # plt.xlim(0, 1)
+    # plt.show()
     print(f"Regression score: {regression.score(x, y)}")
     print("Predict: ", regression.predict(df[["close"]][-projection:]))
 
@@ -110,11 +111,9 @@ def line_regres_manually(DATA):
 def main():
     print(correlation(df, "Street", "Garage"))
     sc(df, "Street", "Garage")
-    print(DATA_bitcoin)
-    print(hide())
-    print(normalize(hide()))
-    slicing(normalize(hide()), 'predict', 'close')
-    line_regres(slicing(normalize(hide()), 'predict', 'close')[0], slicing(normalize(hide()), 'predict', 'close')[1])
+    print("DATA_bitcoin \n", DATA_bitcoin)
+    print("hide: \n", hide())
+    line_regres(slicing(hide(), 'close', 'predict')[0], slicing(hide(), 'close', 'predict')[1])
     print(DATA_housePrice)
     line_regres_manually(check_missing_and_fill(DATA_housePrice))
 
