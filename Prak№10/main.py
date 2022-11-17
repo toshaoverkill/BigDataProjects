@@ -32,14 +32,13 @@ def replacevalue():
     def repl():
         DATA_beers['style'].replace(d, inplace=True)
         return (DATA_beers)
-
     return repl()
 
 
 def preprocessing_function(DATA=DATA_beers):  # Предобработка данных
     print('DATA info():')
     DATA.info()
-
+    DATA_beers['style'] = DATA_beers['style'].astype(float)
     def median_fill(column):
         median_value = DATA[column].median()
         DATA[column].fillna(median_value, inplace=True)
@@ -133,7 +132,7 @@ def visualize():
     y = DATA_beers['ibu']
     z = DATA_beers['style']
     fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
+    ax = fig.add_subplot(projection='3d')
     ax.scatter(x, y, z)
     plt.show()
 
