@@ -63,7 +63,7 @@ def razbienie(DATA, class_column):
         fig = px.imshow(confusion_matrix(y_test, y_predict), text_auto=True)
         fig.update_layout(title=f'Матрица ошибок.{l}', xaxis_title='Target', yaxis_title='Prediction')
         fig.show()
-        print('Линейная регрессия: \n', classification_report(y_test, y_predict))
+        print('Логическая регрессия: \n', classification_report(y_test, y_predict))
         print('Время работы алгоритама: ', time.time() - start_logic_f_time)
 
     def svm_f():
