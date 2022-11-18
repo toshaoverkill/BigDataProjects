@@ -83,11 +83,11 @@ def kmeans():
     labels = model1.labels_
     DATA_beers['Claster'] = labels
     print(DATA_beers['Claster'].value_counts())
+    print('Время работы k-means: ', time.time() - start_kmeans)
     fig = go.Figure(
         data=[go.Scatter3d(x=DATA_beers['abv'], y=DATA_beers['ibu'], z=DATA_beers['style'], mode='markers',
                            marker_color=DATA_beers['Claster'], marker_size=4)])
     fig.show()
-    print('Время работы k-means: ', time.time() - start_kmeans)
 
 
 def hierarchical_agglomerative_clustering():
