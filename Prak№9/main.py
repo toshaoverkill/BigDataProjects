@@ -47,12 +47,12 @@ def razbienie(DATA, class_column):
     x_train, x_test, y_train, y_test = train_test_split(predictors, target, train_size=0.8, shuffle=True,
                                                         random_state=271)
     print('Размер для признаков обучающей выборки: ', x_train.shape, '\n',
-          'Размер для признаковы тестовой выборки: ', x_test.shape, '\n',
+          'Размер для признаков тестовой выборки: ', x_test.shape, '\n',
           'Размер целевого показателя обучающей выборки: ', y_train.shape, '\n',
           'Размер показателя тестовой выборки: ', y_test.shape)
 
     def logic_f():
-        l = 'Логическая регрессия'
+        l = 'Логистическая регрессия'
         start_logic_f_time = time.time()
         model = LogisticRegression(random_state=271)
         model.fit(x_train, y_train)
@@ -63,8 +63,8 @@ def razbienie(DATA, class_column):
         fig = px.imshow(confusion_matrix(y_test, y_predict), text_auto=True)
         fig.update_layout(title=f'Матрица ошибок.{l}', xaxis_title='Target', yaxis_title='Prediction')
         fig.show()
-        print('Логическая регрессия: \n', classification_report(y_test, y_predict))
-        print('Время работы алгоритама: ', time.time() - start_logic_f_time)
+        print('Логистическая регрессия: \n', classification_report(y_test, y_predict))
+        print('Время работы алгоритма: ', time.time() - start_logic_f_time)
 
     def svm_f():
         l = 'Support Vector Machine(SVM)'
@@ -81,7 +81,7 @@ def razbienie(DATA, class_column):
         fig = px.imshow(confusion_matrix(y_test, svm_preds), text_auto=True)
         fig.update_layout(title=f'Матрица ошибок.{l}', xaxis_title='Target', yaxis_title='Prediction')
         fig.show()
-        print('Время работы алгоритама: ', time.time() - start_svm_f_time)
+        print('Время работы алгоритма: ', time.time() - start_svm_f_time)
 
     def knn_f():
         l = 'Nearest Neighbor (KNN)'
@@ -98,7 +98,7 @@ def razbienie(DATA, class_column):
         fig = px.imshow(confusion_matrix(y_test, knn_preds), text_auto=True)
         fig.update_layout(title=f'Матрица ошибок.{l}', xaxis_title='Target', yaxis_title='Prediction')
         fig.show()
-        print('Время работы алгоритама: ', time.time() - start_knn_time)
+        print('Время работы алгоритма: ', time.time() - start_knn_time)
 
     logic_f()
     svm_f()
